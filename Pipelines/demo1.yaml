@@ -1,0 +1,63 @@
+name: Demo1
+
+trigger:
+  branches:
+    include:
+    - master
+  paths:
+    include:
+      - /demo1/*
+
+variables:
+  -Location: 'westeurope'
+  -DeploymentName: 'Demo1'
+  -ServiceConnection: 'mi-bicep-devops'
+  -TemplateParameterFile: 'demo1.bicepparam'
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: Validate
+  jobs:
+  - job: Validate
+    steps:
+    - task: AzurePowerShell@5
+      name: Validate
+      inputs:
+        azureSubscription: $(ServiceConnection)
+        ScriptType: 'InlineScript'
+        Inline: 'Test-AzSubscriptionDeployment -Location $(Location) -TemplateParameterFile $(TemplateParameterFile) -Verbose'
+        azurePowerShellVersion: 'LatestVersion'
+        pwsh: true
+- stage: WhatIf
+  jobs:
+  - job: WhatIf
+    steps:
+    - task: AzurePowerShell@5
+      name: WhatIf
+      inputs:
+        azureSubscription: $(ServiceConnection)
+        ScriptType: 'InlineScript'
+        Inline: 'New-AzSubscriptionDeployment -Name $(DeploymentName) -Location $(Location) -TemplateParameterFile $(TemplateParameterFile) -WhatIf -Verbose'
+        azurePowerShellVersion: 'LatestVersion'
+        pwsh: true
+- stage: Deploy
+  dependsOn: WhatIf
+  jobs:
+  - deployment:
+    displayName: Deploy
+    environment: Production
+    strategy:
+     runOnce:
+       deploy:
+        steps:
+        - checkout: self
+        - task: AzurePowerShell@5
+          name: Deploy
+          inputs:
+            azureSubscription: $(ServiceConnection)
+            ScriptType: 'InlineScript'
+            Inline: 'New-AzSubscriptionDeployment -Name $(DeploymentName) -Location $(Location) -TemplateParameterFile $(TemplateParameterFile) -Verbose'
+            azurePowerShellVersion: 'LatestVersion'
+            pwsh: true
