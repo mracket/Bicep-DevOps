@@ -23,7 +23,6 @@ jobs:
         resource-group-name: rg-bicep-devops-demo
         operation: create
         name: demo1
-        location: swedencentral
         scope: resourceGroup
         subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
         parameters-file: demo1.bicepparam
