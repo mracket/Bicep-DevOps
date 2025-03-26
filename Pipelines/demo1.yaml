@@ -9,10 +9,14 @@ trigger:
       - /demo1/*
 
 variables:
-  -Location: 'westeurope'
-  -DeploymentName: 'Demo1'
-  -ServiceConnection: 'mi-bicep-devops'
-  -TemplateParameterFile: 'demo1.bicepparam'
+- name: 'Location'
+  value: 'westeurope'
+- name: DeploymentName
+  value: 'Demo1'
+- name: ServiceConnection
+  value: 'mi-bicep-devops'
+- name: TemplateParameterFile
+  value: 'demo1.bicepparam'
 
 pool:
   vmImage: ubuntu-latest
