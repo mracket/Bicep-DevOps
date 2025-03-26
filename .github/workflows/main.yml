@@ -1,0 +1,30 @@
+on: [push]
+name: demo1
+permissions:
+  id-token: write
+  contents: read
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout code
+    - uses: actions/checkout@main
+    
+    - name: 'Az CLI login'
+      uses: azure/login@v2
+      with:
+       client-id: ${{ env.CLIENT_ID }}
+       tenant-id: ${{ env.TENANT_ID }}
+       subscription-id: ${{ env.SUBSCRIPTION_ID }}
+    - name: Deployment
+      uses: azure/bicep-deploy@v2
+      with:
+        type: deployment
+        operation: create
+        name: demo1
+        location: westeurope
+        scope: subscription
+        subscription-id: ${{ env.SUBSCRIPTION_ID }}
+        parameters-file: demo1.bicepparam
+
+
