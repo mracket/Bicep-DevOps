@@ -1,4 +1,7 @@
-on: [push]
+on:
+  push:
+    paths:
+      - demo1.bicepparam
 name: demo1
 permissions:
   id-token: write
