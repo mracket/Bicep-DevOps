@@ -13,9 +13,9 @@ jobs:
     - name: 'Az CLI login'
       uses: azure/login@v2
       with:
-       client-id: ${{ env.CLIENT_ID }}
-       tenant-id: ${{ env.TENANT_ID }}
-       subscription-id: ${{ env.SUBSCRIPTION_ID }}
+       client-id: ${{ secrets.CLIENT_ID }}
+       tenant-id: ${{ secrets.TENANT_ID }}
+       subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
     - name: Deployment
       uses: azure/bicep-deploy@v2
       with:
@@ -24,7 +24,7 @@ jobs:
         name: demo1
         location: westeurope
         scope: subscription
-        subscription-id: ${{ env.SUBSCRIPTION_ID }}
+        subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
         parameters-file: demo1.bicepparam
 
 
