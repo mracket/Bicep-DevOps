@@ -19,12 +19,12 @@ jobs:
     - name: Deployment
       uses: azure/bicep-deploy@v2
       with:
-        type: resourceGroup
-        resource-group-name: 
+        type: deployment
+        resource-group-name: rg-bicep-devops-demo
         operation: create
         name: demo1
         location: swedencentral
-        scope: subscription
+        scope: resourceGroup
         subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
         parameters-file: demo1.bicepparam
 
