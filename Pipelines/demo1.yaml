@@ -9,10 +9,10 @@ trigger:
       - /demo1/*
 
 variables:
-- name: 'Location'
-  value: 'westeurope'
 - name: DeploymentName
   value: 'Demo1'
+- name: resourceGroupName
+  value: 'rg-bicep-devops-demo'
 - name: ServiceConnection
   value: 'mi-bicep-devops'
 - name: TemplateParameterFile
@@ -31,7 +31,7 @@ stages:
       inputs:
         azureSubscription: $(ServiceConnection)
         ScriptType: 'InlineScript'
-        Inline: 'Test-AzSubscriptionDeployment -Location $(Location) -TemplateParameterFile $(TemplateParameterFile) -Verbose'
+        Inline: 'Test-AzResourceGroupDeployment -ResourceGroupName $(resourceGroupName) -TemplateParameterFile $(TemplateParameterFile) -Verbose'
         azurePowerShellVersion: 'LatestVersion'
         pwsh: true
 - stage: WhatIf
@@ -43,7 +43,7 @@ stages:
       inputs:
         azureSubscription: $(ServiceConnection)
         ScriptType: 'InlineScript'
-        Inline: 'New-AzSubscriptionDeployment -Name $(DeploymentName) -Location $(Location) -TemplateParameterFile $(TemplateParameterFile) -WhatIf -Verbose'
+        Inline: 'New-AzResourceGroupDeployment -Name $(DeploymentName) -ResourceGroupName $(resourceGroupName) -TemplateParameterFile $(TemplateParameterFile) -WhatIf -Verbose'
         azurePowerShellVersion: 'LatestVersion'
         pwsh: true
 - stage: Deploy
@@ -62,6 +62,6 @@ stages:
           inputs:
             azureSubscription: $(ServiceConnection)
             ScriptType: 'InlineScript'
-            Inline: 'New-AzSubscriptionDeployment -Name $(DeploymentName) -Location $(Location) -TemplateParameterFile $(TemplateParameterFile) -Verbose'
+            Inline: 'New-AzResourceGroupDeployment -Name $(DeploymentName) -ResourceGroupName $(resourceGroupName) -TemplateParameterFile $(TemplateParameterFile) -Verbose'
             azurePowerShellVersion: 'LatestVersion'
             pwsh: true
