@@ -6,7 +6,7 @@ trigger:
     - master
   paths:
     include:
-      - /demo1/*
+      - 'demo1-devops.bicepparam'
 
 variables:
 - name: DeploymentName
