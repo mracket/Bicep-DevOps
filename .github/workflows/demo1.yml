@@ -1,7 +1,7 @@
 on:
   push:
     paths:
-      - demo1.bicepparam
+      - demo1-github.bicepparam
     branches: main
 name: demo1
 permissions:
@@ -29,6 +29,6 @@ jobs:
         name: demo1
         scope: resourceGroup
         subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
-        parameters-file: demo1.bicepparam
+        parameters-file: demo1-github.bicepparam
 
 

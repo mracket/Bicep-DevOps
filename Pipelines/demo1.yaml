@@ -16,7 +16,7 @@ variables:
 - name: ServiceConnection
   value: 'mi-bicep-devops'
 - name: TemplateParameterFile
-  value: 'demo1.bicepparam'
+  value: 'demo1-devops.bicepparam'
 
 pool:
   vmImage: ubuntu-latest
