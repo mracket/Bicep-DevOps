@@ -3,7 +3,7 @@ name: Demo1
 trigger:
   branches:
     include:
-    - master
+    - main
   paths:
     include:
       - 'demo1-devops.bicepparam'
